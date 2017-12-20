@@ -1,0 +1,42 @@
+<h1>Hello, <%= @user.name %>!</h1>
+<form action="<%= logout_user_path %>" method="post">
+	<input type ='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
+	<input type ='hidden' name='_method' value='delete'/>
+	<input type ="submit" style="margin-left:700px;" value="Logout"/>
+</form>
+<% if flash[:errors] %>
+	<% flash[:errors].each do |error| %>
+		<p><%= error %></p>
+	<% end %>
+<% end %>
+<form class="form-horizontal" action="<%= create_idea_path %>" method="post">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<div class="form-group">
+		<div class="col-sm-10">
+			<input type="text" name="ideas[content]" class="form-control" placeholder="Post something witty...">
+			<button type="submit">Idea!</button>
+		</div>
+	</div>
+</form>
+<br>
+<br>
+
+<% @ideas.each do |idea| %>
+
+	<p><a href="<%= show_user_path idea.user.id %>"><%= idea.user.alias %></a> says: <%= idea.content %></p>
+	<form action="<%= create_like_path %>" method="post">
+		<input type ='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
+		<button name="likes[idea_id]" value="<%= idea.id %>">Like</button> 
+	</form>
+	<br>
+
+	<a href="<%= show_idea_path idea.id %>"><%= idea.likes.count %> people</a> like this.
+	
+	<% if session[:user_id] == idea.user_id %>
+	<form action="/bright_ideas" method="post">
+			<input type ='hidden' name='_method' value='delete'/>
+			<input type ='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
+			<button name="ideas" value="<%= idea.id %>">Delete</button> 
+		</form>
+	<% end %>
+<% end %>

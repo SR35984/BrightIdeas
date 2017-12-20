@@ -1,0 +1,18 @@
+<form action="<%= idea_index_path %>" method="get">
+	<input type ='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
+	<input type ="submit" style="margin-left:300px; margin-top:50px;" value="Bright Ideas"/>
+</form>
+<form action="<%= logout_user_path %>" method="post">
+	<input type ='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
+	<input type ='hidden' name='_method' value='delete'/>
+	<input type ="submit" style="margin-left:400px;" value="Logout"/>
+</form>
+
+<h2>Name: <%= @user.name %></h2>
+<h2>Alias: <%= @user.alias %></h2>
+<h2>Email: <%= @user.email %></h2>
+<hr>
+
+
+<h3>Total Number of Posts: <%= @ideas %></h3>
+<h3>Total Number of Likes: <%= @likes %></h3>
